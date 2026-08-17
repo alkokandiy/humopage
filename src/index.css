@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --gold: #d4a017;
+    --navy: #0b3d91;
+    --ink: #0a0e14;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    @apply bg-ink font-sans text-ink-90 antialiased;
+  }
+
+  ::selection {
+    @apply bg-gold text-ink;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Fluid display type: tall condensed racing headers */
+  .display-3xl {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 0.95;
+    font-size: clamp(3rem, 9vw, 7.5rem);
+  }
+
+  .display-2xl {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+  }
+
+  .display-xl {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.05;
+    font-size: clamp(1.75rem, 4.5vw, 3rem);
+  }
+
+  .eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.8rem;
+  }
+
+  .ink-fill {
+    background-color: var(--ink);
+  }
+}
+
+@layer components {
+  .angle {
+    /* Single consistent diagonal signature between sections */
+    clip-path: polygon(0 0, 100% 4%, 100% 100%, 0 100%);
+  }
+
+  .angle-flip {
+    clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .container-x {
+    @apply mx-auto w-full max-w-container px-5 sm:px-8 lg:px-10;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 font-display tracking-display uppercase text-ink transition-colors duration-200;
+    font-weight: 700;
+    background-color: var(--gold);
+    padding: 1rem 2.25rem;
+    border-radius: 9999px;
+  }
+
+  .btn-gold:hover {
+    background-color: var(--gold);
+    filter: brightness(1.1);
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 font-display tracking-display uppercase transition-colors duration-200;
+    font-weight: 700;
+    padding: 1rem 2.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    border-radius: 9999px;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .hairline {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.02)
+    );
+    height: 1px;
+  }
+
+  .hairline-gold {
+    background: linear-gradient(
+      90deg,
+      var(--gold),
+      rgba(212, 160, 23, 0.15)
+    );
+    height: 2px;
+  }
+
+  .link-underline {
+    position: relative;
+  }
+
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 100%;
+    background-color: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 32s linear infinite;
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .role-swap {
+    animation: roleSwap 0.45s ease-out;
+  }
+}
+
+@keyframes roleSwap {
+  from {
+    opacity: 0;
+    transform: translateY(0.4rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-track {
+    animation: none;
+  }
+}
