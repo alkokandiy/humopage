@@ -2,8 +2,8 @@ import CarSilhouette from './CarSilhouette';
 
 const DEFAULT_BODY = [
   'HUMO-01 is the first Humo Racing car designed from a blank screen — every panel, bracket and bolt decided by the team.',
-  'The package wraps a [engine/powertrain] in a [material] monocoque, runs [wheel size] tyres on machined uprights, and carries a [aero package] tuned for balanced downforce.',
-  'Driver ergonomics come first: a bespoke [seat], an adjustable pedal box and a reachable wheel put the driver in the same headspace as the engineers.',
+  'The powertrain is combustion — the rest of the spec sheet, from monocoque material to aero package, is still being finalized as design work progresses.',
+  'Driver ergonomics are a priority from day one: the goal is a seat, pedal box and wheel position that put the driver in the same headspace as the engineers who built the car.',
 ];
 
 function CarShot({ image }) {

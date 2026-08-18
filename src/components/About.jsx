@@ -43,11 +43,12 @@ export default function About() {
             <div className="mt-8 max-w-xl space-y-4 leading-relaxed text-ink-60">
               <p>
                 Humo Racing is a Formula Student team from Tashkent, Uzbekistan,
-                founded in [20XX] at [university name] by [founder name].
+                founded on July 10, 2026, by Muhammad Mahmudov.
               </p>
               <p>
-                Today we are 79 students working across ten divisions — from
-                aerodynamics and powertrain to drivers and management.
+                We're organized into ten divisions — from aerodynamics and
+                powertrain to drivers and management — with a clear role for
+                everyone on the team.
               </p>
               <p>
                 Our mission is simple: design, build and race a new single-seater
