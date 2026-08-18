@@ -68,8 +68,8 @@ export default function Footer() {
             <h3 className="eyebrow mb-5 text-ink-30">Contact</h3>
             <ul className="space-y-3 text-sm leading-relaxed text-ink-60">
               <li>
-                <a href="mailto:hello@humoracing.uz" className="transition-colors hover:text-gold">
-                  hello@humoracing.uz
+                <a href="mailto:info@humoracing.uz" className="transition-colors hover:text-gold">
+                  info@humoracing.uz
                 </a>
               </li>
               <li>Tashkent, Uzbekistan</li>
