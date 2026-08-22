@@ -60,8 +60,14 @@ const SLIDES = [
 ];
 
 const ACCENTS = {
-  gold: { glow: 'rgba(212, 160, 23, 0.28)' },
-  navy: { glow: 'rgba(27, 90, 208, 0.32)' },
+  gold: {
+    glow: 'rgba(212, 160, 23, 0.28)',
+    shadow: '0 0 80px 20px rgba(212, 160, 23, 0.2), 0 0 160px 40px rgba(212, 160, 23, 0.08)',
+  },
+  navy: {
+    glow: 'rgba(27, 90, 208, 0.32)',
+    shadow: '0 0 80px 20px rgba(27, 90, 208, 0.2), 0 0 160px 40px rgba(27, 90, 208, 0.08)',
+  },
 };
 
 function PlayIcon() {
@@ -88,12 +94,20 @@ function SlideArt({ slide }) {
       {slide.image ? (
         <img src={slide.image} alt="" className="absolute right-[-10%] top-1/2 h-[65%] w-[70%] -translate-y-1/2 -rotate-3 object-cover" />
       ) : (
-        <div className="absolute right-[-10%] top-1/2 aspect-[420/150] w-[86%] max-w-[52rem] -translate-y-1/2 -rotate-3 sm:right-[2%] sm:w-[58%]">
+        <div className="absolute right-[-10%] top-1/2 aspect-[520/180] w-[86%] max-w-[56rem] -translate-y-1/2 -rotate-3 sm:right-[2%] sm:w-[58%]">
+          {/* Radial glow behind the car */}
           <div
-            className="absolute -inset-[28%]"
+            className="absolute -inset-[35%]"
             style={{ background: `radial-gradient(closest-side, ${accent.glow}, transparent 72%)` }}
           />
-          <CarSilhouette strokeWidth={4} className="h-full w-full text-white/25" />
+          {/* Car silhouette with drop-shadow glow */}
+          <CarSilhouette
+            strokeWidth={1.5}
+            className="h-full w-full text-white/25"
+            style={{ filter: `drop-shadow(${accent.shadow})` }}
+          />
+          {/* Scan line effect */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.03] to-transparent bg-[length:100%_4px] pointer-events-none" />
         </div>
       )}
     </div>

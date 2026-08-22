@@ -19,7 +19,64 @@ export const DIVISIONS = [
   { name: 'Vehicle Dynamics', lead: 'Muhammadamin Axrorov', desc: 'Setup, balance and the setup sheet behind lap time.' },
 ];
 
+export const SPONSOR_TIERS = [
+  {
+    name: 'Title Sponsor',
+    color: 'gold',
+    description: 'Naming rights, prime logo placement across all materials and car livery.',
+    sponsors: [
+      { name: 'Sponsor Name', placeholder: true },
+    ],
+  },
+  {
+    name: 'Gold Sponsor',
+    color: 'gold',
+    description: 'Prominent logo placement on car, team kit and event banners.',
+    sponsors: [
+      { name: 'Sponsor Name', placeholder: true },
+      { name: 'Sponsor Name', placeholder: true },
+      { name: 'Sponsor Name', placeholder: true },
+    ],
+  },
+  {
+    name: 'Silver Sponsor',
+    color: 'navy',
+    description: 'Logo on team materials, social media recognition and pit pass access.',
+    sponsors: [
+      { name: 'Sponsor Name', placeholder: true },
+      { name: 'Sponsor Name', placeholder: true },
+      { name: 'Sponsor Name', placeholder: true },
+      { name: 'Sponsor Name', placeholder: true },
+    ],
+  },
+  {
+    name: 'Bronze Sponsor',
+    color: 'slate',
+    description: 'Social media shoutouts, event invitations and team newsletter features.',
+    sponsors: [
+      { name: 'Sponsor Name', placeholder: true },
+      { name: 'Sponsor Name', placeholder: true },
+      { name: 'Sponsor Name', placeholder: true },
+      { name: 'Sponsor Name', placeholder: true },
+      { name: 'Sponsor Name', placeholder: true },
+    ],
+  },
+];
+
+export const TEAM_DIVISIONS = [
+  'Aerodynamics',
+  'Chassis',
+  'Digital Production',
+  'Drivers',
+  'Electronics',
+  'Management',
+  'Powertrain',
+  'Thermal Management',
+  'Unsprung Masses & Geartrain',
+  'Vehicle Dynamics',
+];
+
 export const SOCIALS = [
   { name: 'Instagram', href: 'https://instagram.com/humoracing' },
-  { name: 'Telegram', href: 'https://t.me/humoracing' },
+  { name: 'Telegram', href: 'https://t.me/humoracinguz' },
 ];
