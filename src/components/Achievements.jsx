@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import useReducedMotion from '../hooks/useReducedMotion';
+import useScrollReveal from '../hooks/useScrollReveal';
 import CardArt from './CardArt';
 import { ChevronLeft, ChevronRight } from './icons';
 
@@ -62,7 +63,12 @@ function CardCarousel({ cards }) {
     const el = scrollerRef.current;
     if (!el) return;
     const target = Math.max(0, Math.min(count - 1, i));
-    el.scrollTo({ left: target * step(), behavior: reduced ? 'auto' : 'smooth' });
+    el.scrollTo({
+      left: target * step(),
+      behavior: reduced ? 'auto' : 'smooth',
+    });
+    el.style.scrollBehavior = 'smooth';
+    el.style.scrollSnapType = 'x mandatory';
   };
 
   return (
@@ -76,11 +82,11 @@ function CardCarousel({ cards }) {
         aria-label="Achievement highlights"
         className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {cards.map((card) => (
+        {cards.map((card, i) => (
           <article
             key={card.caption}
             data-card
-            className="glass-panel relative aspect-[4/5] w-[80%] shrink-0 snap-start overflow-hidden sm:w-[46%] lg:w-[36%] hover:holographic-border transition-all duration-300"
+            className={`reveal-up stagger-${i + 1} glass-panel relative aspect-[4/5] w-[80%] shrink-0 snap-start overflow-hidden sm:w-[46%] lg:w-[36%] hover:holographic-border transition-all duration-300`}
           >
             <CardArt image={card.image} glyph={card.glyph} alt={card.caption} className="absolute inset-0" />
             <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent" />
@@ -114,7 +120,9 @@ function CardCarousel({ cards }) {
               aria-label={`Go to achievement ${i + 1}`}
               aria-current={index === i}
               className={`h-2 rounded-full transition-all duration-300 ${
-                index === i ? 'w-8 bg-gold' : 'w-2 bg-ink-20 hover:bg-ink-30'
+                index === i
+                  ? 'w-8 bg-gold animate-glow-gold'
+                  : 'w-2 bg-ink-20 hover:bg-ink-30'
               }`}
             />
           ))}
@@ -135,11 +143,17 @@ function CardCarousel({ cards }) {
 }
 
 export default function Achievements() {
+  const [sectionRef, sectionVisible] = useScrollReveal();
+  const [headingRef, headingVisible] = useScrollReveal();
+
   return (
     <section id="achievements" className="section-obsidian relative overflow-hidden">
       <div className="container-x relative z-10 py-24 lg:py-32">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,360px)_1fr] lg:gap-16">
-          <div className="self-start lg:sticky lg:top-24">
+          <div
+            ref={headingRef}
+            className={`self-start lg:sticky lg:top-24 reveal-up ${headingVisible ? 'visible' : ''}`}
+          >
             <span className="eyebrow text-gold">OUR HISTORY</span>
             <h2 className="display-xl mt-4 text-white">OUR ACHIEVEMENTS</h2>
             <div className="hairline-gold mt-5 w-16" />
@@ -154,7 +168,9 @@ export default function Achievements() {
             </div>
           </div>
 
-          <CardCarousel cards={ACHIEVEMENTS} />
+          <div ref={sectionRef} className={`reveal-up ${sectionVisible ? 'visible' : ''}`}>
+            <CardCarousel cards={ACHIEVEMENTS} />
+          </div>
         </div>
       </div>
     </section>

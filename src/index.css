@@ -64,6 +64,22 @@
     font-size: clamp(1.75rem, 4.5vw, 3rem);
   }
 
+  .eyebrow-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .eyebrow-wrap .animate-tech-trace {
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--aether) 0%, transparent 100%);
+    transform-origin: left;
+  }
+
   .eyebrow {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
@@ -84,6 +100,79 @@
 @layer components {
   .container-x {
     @apply mx-auto w-full max-w-container px-5 sm:px-8 lg:px-10;
+  }
+
+  /* ── Animation utilities ── */
+  .ease-elastic {
+    transition-timing-function: cubic-bezier(0.680, -0.550, 0.270, 1.550);
+  }
+
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .stagger-1 { transition-delay: 0ms; }
+  .stagger-2 { transition-delay: 80ms; }
+  .stagger-3 { transition-delay: 160ms; }
+  .stagger-4 { transition-delay: 240ms; }
+  .stagger-5 { transition-delay: 320ms; }
+  .stagger-6 { transition-delay: 400ms; }
+  .stagger-7 { transition-delay: 480ms; }
+  .stagger-8 { transition-delay: 560ms; }
+
+  .volumetric-enter {
+    opacity: 0;
+    filter: blur(8px) brightness(0.4);
+    transform: scale(1.04);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .volumetric-enter.visible {
+    opacity: 1;
+    filter: blur(0) brightness(1);
+    transform: scale(1);
+  }
+
+  .char-reveal span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px) rotateX(40deg);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.680, -0.550, 0.270, 1.550);
+  }
+  .char-reveal.visible span {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
   }
 
   .glass-panel {
@@ -155,6 +244,7 @@
 
   .btn-gold {
     @apply inline-flex items-center justify-center gap-2 font-display uppercase text-ink transition-all duration-300;
+    position: relative;
     font-weight: 700;
     letter-spacing: 0.06em;
     font-size: 0.8rem;
@@ -165,12 +255,23 @@
   }
   .btn-gold:hover {
     filter: brightness(1.15);
-    box-shadow: 0 0 30px rgba(255,193,7,0.3), 0 4px 16px rgba(0,0,0,0.4);
+    box-shadow: 0 0 40px rgba(255,193,7,0.45), 0 0 60px rgba(255,193,7,0.2), 0 4px 16px rgba(0,0,0,0.4);
     transform: translateY(-1px);
+  }
+  .btn-gold:hover::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,193,7,0.3), transparent);
+    opacity: 0;
+    animation: glowPulseGold 1.5s ease-in-out infinite;
+    pointer-events: none;
   }
 
   .btn-aether {
     @apply inline-flex items-center justify-center gap-2 font-display uppercase text-white transition-all duration-300;
+    position: relative;
     font-weight: 700;
     letter-spacing: 0.06em;
     font-size: 0.8rem;
@@ -181,8 +282,18 @@
   }
   .btn-aether:hover {
     filter: brightness(1.15);
-    box-shadow: 0 0 30px rgba(0,123,255,0.35), 0 4px 16px rgba(0,0,0,0.4);
+    box-shadow: 0 0 40px rgba(0,123,255,0.45), 0 0 60px rgba(0,123,255,0.2), 0 4px 16px rgba(0,0,0,0.4);
     transform: translateY(-1px);
+  }
+  .btn-aether:hover::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(0,123,255,0.3), transparent);
+    opacity: 0;
+    animation: glowPulseAether 1.5s ease-in-out infinite;
+    pointer-events: none;
   }
 
   .btn-outline {
@@ -305,6 +416,49 @@
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+@keyframes glowPulseAether {
+  0%, 100% { box-shadow: 0 0 20px rgba(0,123,255,0.25), 0 0 40px rgba(0,123,255,0.1); }
+  50% { box-shadow: 0 0 30px rgba(0,204,255,0.4), 0 0 60px rgba(0,123,255,0.2); }
+}
+
+@keyframes glowPulseGold {
+  0%, 100% { box-shadow: 0 0 20px rgba(255,193,7,0.2), 0 4px 12px rgba(0,0,0,0.3); }
+  50% { box-shadow: 0 0 35px rgba(255,193,7,0.4), 0 0 60px rgba(212,160,23,0.15); }
+}
+
+@keyframes fadeInNav {
+  0% { opacity: 0; transform: translateY(-20px); }
+  60% { transform: translateY(3px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes charForge {
+  0% { opacity: 0; transform: translateY(12px) rotateX(30deg); filter: blur(4px); }
+  50% { filter: blur(1px); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0deg); filter: blur(0); }
+}
+
+@keyframes techTrace {
+  0% { width: 0; opacity: 0; }
+  10% { opacity: 1; }
+  100% { width: 100%; opacity: 1; }
+}
+
+@keyframes dataFlicker {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+  75% { opacity: 0.8; }
+}
+
+.animate-glow-aether { animation: glowPulseAether 3s ease-in-out infinite; }
+.animate-glow-gold { animation: glowPulseGold 3s ease-in-out infinite; }
+.animate-fade-in-nav { animation: fadeInNav 0.8s cubic-bezier(0.680, -0.550, 0.270, 1.550) both; }
+.animate-char-forge { animation: charForge 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-tech-trace { animation: techTrace 1.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-data-flicker { animation: dataFlicker 2s ease-in-out infinite; }
+.animate-glow-pulse-gold { animation: glowPulseGold 1.2s ease-in-out infinite; }
+.animate-glow-pulse-aether { animation: glowPulseAether 1.2s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

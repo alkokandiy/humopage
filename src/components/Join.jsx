@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TEAM_DIVISIONS } from '../data';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 const STORAGE_KEY = 'humo_applications';
 
@@ -30,6 +31,17 @@ export default function Join() {
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
   const [selectedDivision, setSelectedDivision] = useState('');
+  const [fieldsVisible, setFieldsVisible] = useState([]);
+  const [sectionRef, sectionVisible] = useScrollReveal({ threshold: 0.08 });
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    if (!sectionVisible) return;
+    const timers = TEAM_DIVISIONS.map((_, i) =>
+      setTimeout(() => setFieldsVisible((prev) => [...prev, true]), 200 + i * 120)
+    );
+    return () => timers.forEach(clearTimeout);
+  }, [sectionVisible]);
 
   const update = (field) => (e) => {
     setForm((f) => ({ ...f, [field]: e.target.value }));
@@ -62,13 +74,19 @@ export default function Join() {
     }
     saveApplication(form);
     setSubmitted(true);
+    setShowSuccess(true);
   };
 
   if (submitted) {
     return (
       <section id="join" className="section-obsidian-alt relative overflow-hidden">
         <div className="container-x text-center py-32">
-          <div className="mx-auto max-w-md">
+          <div
+            className={`mx-auto max-w-md transition-all duration-700 ${
+              showSuccess ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+            style={{ transitionTimingFunction: 'cubic-bezier(0.680, -0.550, 0.270, 1.550)' }}
+          >
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-aether/15">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-8 w-8 text-aether">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -84,6 +102,8 @@ export default function Join() {
                 setForm(INITIAL_FORM);
                 setSelectedDivision('');
                 setSubmitted(false);
+                setShowSuccess(false);
+                setFieldsVisible([]);
               }}
               className="btn-outline mt-8"
             >
@@ -96,7 +116,13 @@ export default function Join() {
   }
 
   return (
-    <section id="join" className="section-obsidian-alt relative overflow-hidden">
+    <section
+      id="join"
+      ref={sectionRef}
+      className={`section-obsidian-alt relative overflow-hidden transition-all duration-700 ${
+        sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      }`}
+    >
       <div className="container-x py-24 lg:py-32">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-20">
           {/* Left column — copy + division buttons */}
@@ -121,10 +147,11 @@ export default function Join() {
                   key={div}
                   type="button"
                   onClick={() => handleDivisionClick(div)}
-                  className={`rounded-lg border px-3 py-2 text-xs font-medium uppercase tracking-wider transition-all duration-300 ${
+                  style={{ transition: 'all 0.3s cubic-bezier(0.680, -0.550, 0.270, 1.550)' }}
+                  className={`rounded-lg border px-3 py-2 text-xs font-medium uppercase tracking-wider ${
                     selectedDivision === div
-                      ? 'border-aether/30 bg-aether/10 text-aether-light glow-aether'
-                      : 'border-ink-10 bg-ink/[0.04] text-ink-40 hover:border-ink-20 hover:text-ink-30'
+                      ? 'border-aether/30 bg-aether/10 text-aether-light glow-aether scale-105'
+                      : 'border-ink-10 bg-ink/[0.04] text-ink-40 hover:border-ink-20 hover:text-ink-30 hover:scale-[1.03]'
                   }`}
                 >
                   {div}
@@ -142,7 +169,14 @@ export default function Join() {
             >
               <div className="space-y-5">
                 {/* Name */}
-                <div>
+                <div
+                  className={`transition-all duration-500 ${
+                    fieldsVisible[0]
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.680, -0.550, 0.270, 1.550)' }}
+                >
                   <label htmlFor="join-name" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-ink-30">
                     Full name *
                   </label>
@@ -160,7 +194,14 @@ export default function Join() {
                 </div>
 
                 {/* Email */}
-                <div>
+                <div
+                  className={`transition-all duration-500 ${
+                    fieldsVisible[1]
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.680, -0.550, 0.270, 1.550)' }}
+                >
                   <label htmlFor="join-email" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-ink-30">
                     Email *
                   </label>
@@ -178,7 +219,14 @@ export default function Join() {
                 </div>
 
                 {/* Phone */}
-                <div>
+                <div
+                  className={`transition-all duration-500 ${
+                    fieldsVisible[2]
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.680, -0.550, 0.270, 1.550)' }}
+                >
                   <label htmlFor="join-phone" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-ink-30">
                     Phone number *
                   </label>
@@ -196,7 +244,14 @@ export default function Join() {
                 </div>
 
                 {/* Major */}
-                <div>
+                <div
+                  className={`transition-all duration-500 ${
+                    fieldsVisible[3]
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.680, -0.550, 0.270, 1.550)' }}
+                >
                   <label htmlFor="join-major" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-ink-30">
                     Major / Field of study *
                   </label>
@@ -214,7 +269,14 @@ export default function Join() {
                 </div>
 
                 {/* Division */}
-                <div>
+                <div
+                  className={`transition-all duration-500 ${
+                    fieldsVisible[4]
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.680, -0.550, 0.270, 1.550)' }}
+                >
                   <label htmlFor="join-division" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-ink-30">
                     Desired division *
                   </label>

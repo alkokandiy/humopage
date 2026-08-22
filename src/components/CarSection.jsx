@@ -4,6 +4,7 @@ import render960 from '../assets/images/humo-01-render-960.png';
 import render960Webp from '../assets/images/humo-01-render-960.webp';
 import render1280 from '../assets/images/humo-01-render-1280.png';
 import render1280Webp from '../assets/images/humo-01-render-1280.webp';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 const SPECS = [
   { label: 'POWERTRAIN', value: 'Combustion' },
@@ -13,12 +14,23 @@ const SPECS = [
 ];
 
 export default function CarSection() {
+  const [sectionRef, sectionVisible] = useScrollReveal();
+  const [imageRef, imageVisible] = useScrollReveal();
+  const [infoRef, infoVisible] = useScrollReveal();
+
   return (
     <section id="car" className="section-obsidian-alt relative overflow-hidden">
       <div className="container-x relative z-10 py-24 lg:py-32">
+        <div ref={sectionRef} className={`reveal-up ${sectionVisible ? 'visible' : ''} mb-12`}>
+          <div className="eyebrow-wrap">
+            <span className="eyebrow text-gold">The Machine</span>
+            <span className="animate-tech-trace" />
+          </div>
+        </div>
+
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left: Car Image */}
-          <div className="relative">
+          <div ref={imageRef} className={`reveal-up ${imageVisible ? 'visible' : ''} relative`}>
             <div className="holographic-border rounded-lg overflow-hidden bg-ink/50">
               <picture>
                 <source
@@ -42,15 +54,14 @@ export default function CarSection() {
           </div>
 
           {/* Right: Specs & Info */}
-          <div>
-            <span className="eyebrow text-gold">The Machine</span>
+          <div ref={infoRef} className={`reveal-up ${infoVisible ? 'visible' : ''}`}>
             <h2 className="display-2xl mt-4 text-white">HUMO-01</h2>
             <div className="hairline-gold my-6" />
 
             {/* HUD Telemetry Gauges */}
             <div className="grid grid-cols-2 gap-4 mb-8">
               {SPECS.map((spec, i) => (
-                <div key={i} className="hud-gauge p-4 rounded-md bg-ink/40 border border-aether/10">
+                <div key={i} className={`reveal-up stagger-${i + 1} hud-gauge p-4 rounded-md bg-ink/40 border border-aether/10`}>
                   <span className="hud-text text-aether text-xs tracking-widest uppercase">
                     {spec.label}
                   </span>

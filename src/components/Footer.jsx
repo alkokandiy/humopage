@@ -1,4 +1,5 @@
 import { NAV_LINKS, SOCIALS } from '../data';
+import useScrollReveal from '../hooks/useScrollReveal';
 import LogoCoin from './LogoCoin';
 import { InstagramIcon, TelegramIcon } from './icons';
 
@@ -7,13 +8,27 @@ const socialIconMap = {
   Telegram: TelegramIcon,
 };
 
+function FooterColumn({ children, index }) {
+  const [ref, visible] = useScrollReveal({ threshold: 0.1 });
+  return (
+    <div ref={ref} className={`reveal-up stagger-${index + 1} ${visible ? 'visible' : ''}`}>
+      {children}
+    </div>
+  );
+}
+
 export default function Footer() {
+  const [hairlineRef, hairlineVisible] = useScrollReveal({ threshold: 0.3 });
+
   return (
     <footer className="bg-obsidian">
-      <div className="hairline-aether" />
+      <div
+        ref={hairlineRef}
+        className={`hairline-aether transition-none ${hairlineVisible ? 'animate-tech-trace' : 'w-0 opacity-0'}`}
+      />
       <div className="container-x">
         <div className="grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          <div>
+          <FooterColumn index={0}>
             <a href="#top" className="flex items-center gap-3">
               <LogoCoin size={48} />
               <span className="font-display text-2xl font-bold uppercase tracking-display text-white">
@@ -24,9 +39,9 @@ export default function Footer() {
               A Formula Student team from Tashkent designing, building and
               racing a single-seater every season.
             </p>
-          </div>
+          </FooterColumn>
 
-          <div>
+          <FooterColumn index={1}>
             <h3 className="eyebrow mb-5 text-ink-30">Site</h3>
             <ul className="space-y-3">
               {NAV_LINKS.map((link) => (
@@ -40,9 +55,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </FooterColumn>
 
-          <div>
+          <FooterColumn index={2}>
             <h3 className="eyebrow mb-5 text-ink-30">Follow</h3>
             <ul className="space-y-4">
               {SOCIALS.map((social) => {
@@ -53,18 +68,20 @@ export default function Footer() {
                       href={social.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-3 text-ink-60 transition-colors hover:text-aether-light"
+                      className="group inline-flex items-center gap-3 text-ink-60 transition-colors hover:text-aether-light"
                     >
-                      {Icon && <Icon className="h-5 w-5" />}
+                      {Icon && (
+                        <Icon className="h-5 w-5 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(0,204,255,0.6)]" />
+                      )}
                       <span className="font-display text-sm uppercase tracking-display">{social.name}</span>
                     </a>
                   </li>
                 );
               })}
             </ul>
-          </div>
+          </FooterColumn>
 
-          <div>
+          <FooterColumn index={3}>
             <h3 className="eyebrow mb-5 text-ink-30">Contact</h3>
             <ul className="space-y-3 text-sm leading-relaxed text-ink-60">
               <li>
@@ -74,7 +91,7 @@ export default function Footer() {
               </li>
               <li>Tashkent, Uzbekistan</li>
             </ul>
-          </div>
+          </FooterColumn>
         </div>
 
         <div className="hairline-aether" />

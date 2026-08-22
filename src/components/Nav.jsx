@@ -25,14 +25,14 @@ export default function Nav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+      className={`animate-fade-in-nav fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-obsidian/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,123,255,0.1)]'
           : 'bg-transparent'
       }`}
     >
       <nav className="container-x flex h-20 items-center justify-between" aria-label="Primary">
-        <a href="#top" className="flex items-center gap-3" onClick={close} aria-label="Humo Racing home">
+        <a href="#top" className="flex items-center gap-3 transition-transform duration-300 ease-elastic hover:scale-105" onClick={close} aria-label="Humo Racing home">
           <LogoCoin size={50} />
           <span className="font-display text-xl font-bold uppercase tracking-display text-white">
             Humo<span className="text-aether-light"> Racing</span>
@@ -45,7 +45,7 @@ export default function Nav() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="link-underline font-sans text-[0.85rem] font-medium tracking-[0.1em] text-ink-70 transition-colors hover:text-aether-light"
+                  className="link-underline font-sans text-[0.85rem] font-medium tracking-[0.1em] text-ink-70 transition-colors duration-300 ease-elastic hover:text-aether-light"
                 >
                   {link.label}
                 </a>
@@ -113,8 +113,12 @@ export default function Nav() {
         }`}
       >
         <ul className="container-x flex flex-col py-4">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
+          {NAV_LINKS.map((link, i) => (
+            <li
+              key={link.href}
+              className={open ? 'animate-fade-in-up' : ''}
+              style={open ? { animationDelay: `${i * 60}ms` } : undefined}
+            >
               <a
                 href={link.href}
                 onClick={close}

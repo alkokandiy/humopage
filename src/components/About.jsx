@@ -1,18 +1,32 @@
 import { useState } from 'react';
 import { DIVISIONS } from '../data';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 export default function About() {
   const [showDivisions, setShowDivisions] = useState(false);
+  const [sectionRef, sectionVisible] = useScrollReveal();
+  const [leftRef, leftVisible] = useScrollReveal();
+  const [rightRef, rightVisible] = useScrollReveal();
 
   return (
     <section id="team" className="section-obsidian relative overflow-hidden">
       <div className="blueprint-grid absolute inset-0" />
 
       <div className="container-x relative z-10 py-24 lg:py-32">
+        <div ref={sectionRef} className={`reveal-up ${sectionVisible ? 'visible' : ''}`}>
+          <div className="eyebrow-wrap mb-12">
+            <span className="eyebrow text-aether">About Us</span>
+            <span className="animate-tech-trace" />
+          </div>
+        </div>
+
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left: About Formula Student */}
-          <div className="glass-panel p-8 lg:p-12 angle">
-            <span className="eyebrow text-aether">About</span>
+          <div ref={leftRef} className={`reveal-up ${leftVisible ? 'visible' : ''} glass-panel p-8 lg:p-12 angle`}>
+            <div className="eyebrow-wrap">
+              <span className="eyebrow text-aether">About</span>
+              <span className="animate-tech-trace" />
+            </div>
             <h2 className="display-xl mt-4 text-white">ABOUT FORMULA STUDENT</h2>
             <div className="hairline-gold my-6" />
             <div className="space-y-4 text-ink-60 leading-relaxed">
@@ -33,8 +47,11 @@ export default function About() {
           </div>
 
           {/* Right: About Us */}
-          <div className="glass-panel p-8 lg:p-12 angle">
-            <span className="eyebrow text-gold">Team</span>
+          <div ref={rightRef} className={`reveal-up ${rightVisible ? 'visible' : ''} glass-panel p-8 lg:p-12 angle`}>
+            <div className="eyebrow-wrap">
+              <span className="eyebrow text-gold">Team</span>
+              <span className="animate-tech-trace" />
+            </div>
             <h2 className="display-xl mt-4 text-white">ABOUT US</h2>
             <div className="hairline-aether my-6" />
             <div className="space-y-4 text-ink-60 leading-relaxed">
@@ -72,7 +89,10 @@ export default function About() {
           >
             <div className="flex items-center justify-between mb-8">
               <div>
-                <span className="eyebrow text-aether">Our Divisions</span>
+                <div className="eyebrow-wrap">
+                  <span className="eyebrow text-aether">Our Divisions</span>
+                  <span className="animate-tech-trace" />
+                </div>
                 <h3 className="display-xl text-white mt-2">TEAM DIVISIONS</h3>
               </div>
               <button
@@ -89,7 +109,7 @@ export default function About() {
               {DIVISIONS.map((division, i) => (
                 <div
                   key={i}
-                  className="glass-panel p-6 hover:border-aether/30 transition-colors"
+                  className={`reveal-up stagger-${i + 1} glass-panel p-6 hover:border-aether/30 transition-colors`}
                 >
                   <h4 className="text-aether text-lg font-semibold font-display tracking-wide">
                     {division.name}

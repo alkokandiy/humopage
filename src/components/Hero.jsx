@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import useReducedMotion from '../hooks/useReducedMotion';
+import useScrollReveal from '../hooks/useScrollReveal';
 import { ChevronLeft, ChevronRight } from './icons';
 
 import trackAction768 from '../assets/images/humo-01-track-action-768.jpg';
@@ -86,8 +87,18 @@ export default function Hero() {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(!reduced);
   const [holding, setHolding] = useState(false);
+  const [imageVisible, setImageVisible] = useState(false);
   const slideCount = SLIDES.length;
   const paused = !playing || holding;
+
+  useEffect(() => {
+    if (reduced) {
+      setImageVisible(true);
+      return undefined;
+    }
+    const id = setTimeout(() => setImageVisible(true), 500);
+    return () => clearTimeout(id);
+  }, [reduced]);
 
   useEffect(() => {
     if (paused) return undefined;
@@ -152,14 +163,16 @@ export default function Hero() {
         />
 
         <div className="relative max-w-xl">
+          {/* Eyebrow with tech-trace */}
           <p
             className={`eyebrow mb-6 ${
               accentIsGold ? 'text-gold' : 'text-aether-light'
-            }`}
+            } ${!reduced ? 'animate-tech-trace' : ''}`}
           >
             {slide.eyebrow}
           </p>
 
+          {/* Character-by-character headline reveal */}
           <h1 className="relative z-10 -mr-12 font-display text-[clamp(2.5rem,6vw,5rem)] font-bold uppercase leading-[0.92] tracking-display text-white md:-mr-20 lg:-mr-28">
             {slide.headline.map((line, li) => (
               <span
@@ -170,7 +183,19 @@ export default function Hero() {
                     '0 0 40px rgba(0,204,255,0.25), 0 0 80px rgba(0,123,255,0.12)',
                 }}
               >
-                {line}
+                {line.split('').map((char, ci) => (
+                  <span
+                    key={ci}
+                    className="inline-block"
+                    style={{
+                      animation: !reduced
+                        ? `charForge 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${0.3 + li * 0.4 + ci * 0.04}s both`
+                        : undefined,
+                    }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                ))}
               </span>
             ))}
           </h1>
@@ -182,11 +207,11 @@ export default function Hero() {
           <div className="mt-10 flex flex-wrap items-center gap-4">
             {slide.cta.map((cta) =>
               cta.variant === 'gold' ? (
-                <a key={cta.href} href={cta.href} className="btn-gold">
+                <a key={cta.href} href={cta.href} className="btn-gold hover:animate-glow-pulse-gold">
                   {cta.label}
                 </a>
               ) : (
-                <a key={cta.href} href={cta.href} className="btn-outline">
+                <a key={cta.href} href={cta.href} className="btn-outline hover:animate-glow-pulse-aether">
                   {cta.label}
                 </a>
               )
@@ -219,9 +244,11 @@ export default function Hero() {
               alt="Humo Racing's HUMO-01 on a wet test track"
               loading="eager"
               fetchPriority="high"
-              className="block h-[70vh] w-full object-cover object-left-bottom md:h-[85vh] md:object-contain md:object-left-bottom lg:h-[92vh]"
+              className={`block h-[70vh] w-full object-cover object-left-bottom md:h-[85vh] md:object-contain md:object-left-bottom lg:h-[92vh] ${
+                !reduced ? 'volumetric-enter' : ''
+              } ${imageVisible ? 'visible' : ''}`}
               style={{
-                transform: 'scale(1.15) translateX(5%)',
+                transform: reduced ? 'scale(1.15) translateX(5%)' : undefined,
                 transformOrigin: 'bottom right',
               }}
             />
