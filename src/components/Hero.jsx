@@ -2,10 +2,7 @@ import { useState, useEffect } from 'react';
 import useReducedMotion from '../hooks/useReducedMotion';
 import { ChevronLeft, ChevronRight } from './icons';
 
-import trackAction768 from '../assets/images/humo-01-track-action-768.jpg';
-import trackAction768Webp from '../assets/images/humo-01-track-action-768.webp';
-import trackAction1280 from '../assets/images/humo-01-track-action-1280.jpg';
-import trackAction1280Webp from '../assets/images/humo-01-track-action-1280.webp';
+import heroBg from '../assets/images/new.jpeg';
 
 const SLIDES = [
   {
@@ -105,14 +102,31 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative grid min-h-screen min-h-[100svh] overflow-hidden bg-ink md:grid-cols-[5fr_7fr]"
+      className="relative min-h-screen min-h-[100svh] overflow-hidden"
+      style={{ backgroundColor: '#05080c' }}
       onMouseEnter={() => setHolding(true)}
       onMouseLeave={() => setHolding(false)}
       onFocusCapture={() => setHolding(true)}
       onBlurCapture={() => setHolding(false)}
     >
-      {/* LAYER 0: Deep ink background */}
-      <div className="absolute inset-0 z-0 bg-ink" />
+      {/* LAYER 0: Full-bleed background image with left-edge mask fade */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          WebkitMaskImage:
+            'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 15%, rgba(0,0,0,0.7) 30%, black 50%)',
+          maskImage:
+            'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 15%, rgba(0,0,0,0.7) 30%, black 50%)',
+        }}
+      >
+        <img
+          src={heroBg}
+          alt="HUMO-01 Formula Student car with cyan atmospheric effects"
+          loading="eager"
+          fetchPriority="high"
+          className="h-full w-full object-cover object-center"
+        />
+      </div>
 
       {/* Blueprint grid */}
       <div
@@ -140,14 +154,15 @@ export default function Hero() {
           />
         ))}
 
-      {/* LEFT COLUMN: Typography */}
-      <div className="relative z-10 flex flex-col justify-center px-8 py-32 md:pl-16 md:pr-8 lg:pl-24">
+      {/* LEFT COLUMN: Typography — z-10, highest layer for text */}
+      <div className="absolute inset-y-0 left-0 z-10 flex w-full flex-col justify-center md:w-[42%] px-8 py-32 md:pl-16 md:pr-8 lg:pl-24">
+        {/* Safety gradient behind text for guaranteed legibility */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-0"
           style={{
             background:
-              'linear-gradient(to right, #0A0E14 0%, rgba(10,14,20,0.85) 50%, transparent 100%)',
+              'linear-gradient(to right, #05080c 0%, rgba(5,8,12,0.95) 40%, rgba(5,8,12,0.6) 70%, transparent 100%)',
           }}
         />
 
@@ -160,7 +175,7 @@ export default function Hero() {
             {slide.eyebrow}
           </p>
 
-          <h1 className="relative z-10 -mr-12 font-display text-[clamp(2.5rem,6vw,5rem)] font-bold uppercase leading-[0.92] tracking-display text-white md:-mr-20 lg:-mr-28">
+          <h1 className="relative z-10 font-display text-[clamp(2.5rem,6vw,5rem)] font-bold uppercase leading-[0.92] tracking-display text-white">
             {slide.headline.map((line, li) => (
               <span
                 key={li}
@@ -182,67 +197,17 @@ export default function Hero() {
           <div className="mt-10 flex flex-wrap items-center gap-4">
             {slide.cta.map((cta) =>
               cta.variant === 'gold' ? (
-                <a
-                  key={cta.href}
-                  href={cta.href}
-                  className="btn-gold"
-                >
+                <a key={cta.href} href={cta.href} className="btn-gold">
                   {cta.label}
                 </a>
               ) : (
-                <a
-                  key={cta.href}
-                  href={cta.href}
-                  className="btn-outline"
-                >
+                <a key={cta.href} href={cta.href} className="btn-outline">
                   {cta.label}
                 </a>
               )
             )}
           </div>
         </div>
-      </div>
-
-      {/* RIGHT COLUMN: Car, z-20, bleeds off edges */}
-      <div
-        className="relative z-20 overflow-visible"
-        style={{
-          WebkitMaskImage:
-            'linear-gradient(to right, transparent 0%, black 35%)',
-          maskImage:
-            'linear-gradient(to right, transparent 0%, black 35%)',
-        }}
-      >
-        <div className="absolute inset-0 flex items-end justify-center overflow-visible">
-          <picture className="block w-full overflow-visible">
-            <source
-              type="image/webp"
-              srcSet={`${trackAction768Webp} 768w, ${trackAction1280Webp} 1280w`}
-              sizes="60vw"
-            />
-            <img
-              src={trackAction1280}
-              srcSet={`${trackAction768} 768w, ${trackAction1280} 1280w`}
-              sizes="60vw"
-              alt="Humo Racing's HUMO-01 on a wet test track"
-              loading="eager"
-              fetchPriority="high"
-              className="block h-[70vh] w-full object-cover object-left-bottom md:h-[85vh] md:object-contain md:object-left-bottom lg:h-[92vh]"
-              style={{
-                transform: 'scale(1.15) translateX(5%)',
-                transformOrigin: 'bottom right',
-              }}
-            />
-          </picture>
-        </div>
-
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1/3"
-          style={{
-            background: 'linear-gradient(to top, #0A0E14 0%, transparent 100%)',
-          }}
-        />
       </div>
 
       {/* CONTROLS */}
