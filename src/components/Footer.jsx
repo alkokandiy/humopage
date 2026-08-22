@@ -1,5 +1,5 @@
 import { NAV_LINKS, SOCIALS } from '../data';
-import LogoMark from './LogoMark';
+import LogoCoin from './LogoCoin';
 import { InstagramIcon, TelegramIcon } from './icons';
 
 const socialIconMap = {
@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <a href="#top" className="flex items-center gap-3">
-              <LogoMark className="h-12 w-12" />
+              <LogoCoin size={48} />
               <span className="font-display text-2xl font-bold uppercase tracking-display text-white">
                 Humo<span className="text-gold"> Racing</span>
               </span>

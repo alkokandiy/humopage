@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NAV_LINKS, SOCIALS } from '../data';
-import LogoMark from './LogoMark';
+import LogoCoin from './LogoCoin';
 import { InstagramIcon, TelegramIcon } from './icons';
 
 const socialIcons = {
@@ -33,7 +33,7 @@ export default function Nav() {
     >
       <nav className="container-x flex h-20 items-center justify-between" aria-label="Primary">
         <a href="#top" className="flex items-center gap-3" onClick={close} aria-label="Humo Racing home">
-          <LogoMark className="h-[50px] w-[50px]" />
+          <LogoCoin size={50} />
           <span className="font-display text-xl font-bold uppercase tracking-display text-white">
             Humo<span className="text-aether-light"> Racing</span>
           </span>
