@@ -80,13 +80,13 @@ function CardCarousel({ cards }) {
         role="group"
         aria-roledescription="carousel"
         aria-label="Achievement highlights"
-        className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 min-h-[400px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {cards.map((card, i) => (
           <article
             key={card.caption}
             data-card
-            className={`reveal-up stagger-${i + 1} glass-panel relative aspect-[4/5] w-[80%] shrink-0 snap-start overflow-hidden sm:w-[46%] lg:w-[36%] hover:holographic-border transition-all duration-300`}
+            className="glass-panel relative aspect-[4/5] w-[80%] shrink-0 snap-start overflow-hidden sm:w-[46%] lg:w-[36%] hover:holographic-border transition-all duration-300"
           >
             <CardArt image={card.image} glyph={card.glyph} alt={card.caption} className="absolute inset-0" />
             <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent" />
