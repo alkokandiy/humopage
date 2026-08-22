@@ -107,6 +107,7 @@ export default function Nav() {
 
       <div
         id="mobile-nav"
+        aria-hidden={!open}
         className={`lg:hidden overflow-hidden bg-obsidian/95 backdrop-blur-md transition-[max-height] duration-300 ${
           open ? 'max-h-96' : 'max-h-0'
         }`}

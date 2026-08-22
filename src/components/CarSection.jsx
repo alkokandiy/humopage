@@ -74,7 +74,7 @@ export default function CarSection() {
               </p>
             </div>
 
-            <button className="btn-gold mt-8">READ MORE</button>
+            <a href="#join" className="btn-gold mt-8">JOIN THE TEAM</a>
           </div>
         </div>
       </div>

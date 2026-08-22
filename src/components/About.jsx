@@ -29,7 +29,7 @@ export default function About() {
                 automotive engineers.
               </p>
             </div>
-            <button className="btn-aether mt-8">READ MORE</button>
+            <a href="#car" className="btn-aether mt-8">READ MORE</a>
           </div>
 
           {/* Right: About Us */}
@@ -95,7 +95,7 @@ export default function About() {
                     {division.name}
                   </h4>
                   <p className="text-ink-60 mt-2 text-sm leading-relaxed">
-                    {division.description}
+                    {division.desc}
                   </p>
                 </div>
               ))}

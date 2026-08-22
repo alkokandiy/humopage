@@ -33,7 +33,7 @@ export default function Partners() {
           offer brands a unique opportunity to align with engineering excellence,
           international visibility, and a story that resonates across borders.
         </p>
-        <a href="#contact" className="btn-gold mt-10">
+        <a href="#join" className="btn-gold mt-10">
           GET IN TOUCH
         </a>
       </div>
