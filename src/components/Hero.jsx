@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import useReducedMotion from '../hooks/useReducedMotion';
 import { ChevronLeft, ChevronRight } from './icons';
 
-import heroBg from '../assets/images/new.jpeg';
+import trackAction768 from '../assets/images/humo-01-track-action-768.jpg';
+import trackAction768Webp from '../assets/images/humo-01-track-action-768.webp';
+import trackAction1280 from '../assets/images/humo-01-track-action-1280.jpg';
+import trackAction1280Webp from '../assets/images/humo-01-track-action-1280.webp';
 
 const SLIDES = [
   {
@@ -203,17 +206,26 @@ export default function Hero() {
         }}
       >
         <div className="absolute inset-0 flex items-end justify-center overflow-visible">
-          <img
-            src={heroBg}
-            alt="HUMO-01 Formula Student car with cyan atmospheric effects"
-            loading="eager"
-            fetchPriority="high"
-            className="block h-[70vh] w-full object-cover object-left-bottom md:h-[85vh] md:object-cover md:object-left-bottom lg:h-[92vh]"
-            style={{
-              transform: 'scale(1.15) translateX(5%)',
-              transformOrigin: 'bottom right',
-            }}
-          />
+          <picture className="block w-full overflow-visible">
+            <source
+              type="image/webp"
+              srcSet={`${trackAction768Webp} 768w, ${trackAction1280Webp} 1280w`}
+              sizes="60vw"
+            />
+            <img
+              src={trackAction1280}
+              srcSet={`${trackAction768} 768w, ${trackAction1280} 1280w`}
+              sizes="60vw"
+              alt="Humo Racing's HUMO-01 on a wet test track"
+              loading="eager"
+              fetchPriority="high"
+              className="block h-[70vh] w-full object-cover object-left-bottom md:h-[85vh] md:object-contain md:object-left-bottom lg:h-[92vh]"
+              style={{
+                transform: 'scale(1.15) translateX(5%)',
+                transformOrigin: 'bottom right',
+              }}
+            />
+          </picture>
         </div>
 
         <div
