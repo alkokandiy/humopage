@@ -204,7 +204,15 @@ export default function Hero() {
       </div>
 
       {/* RIGHT COLUMN: Car, z-20, bleeds off edges */}
-      <div className="relative z-20 overflow-visible">
+      <div
+        className="relative z-20 overflow-visible"
+        style={{
+          WebkitMaskImage:
+            'linear-gradient(to right, transparent 0%, black 35%)',
+          maskImage:
+            'linear-gradient(to right, transparent 0%, black 35%)',
+        }}
+      >
         <div className="absolute inset-0 flex items-end justify-center overflow-visible">
           <picture className="block w-full overflow-visible">
             <source
@@ -227,15 +235,6 @@ export default function Hero() {
             />
           </picture>
         </div>
-
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-1/3"
-          style={{
-            background:
-              'linear-gradient(to right, #0A0E14 0%, rgba(10,14,20,0.6) 40%, transparent 100%)',
-          }}
-        />
 
         <div
           aria-hidden="true"
