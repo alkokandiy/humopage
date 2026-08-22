@@ -102,31 +102,14 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative min-h-screen min-h-[100svh] overflow-hidden"
-      style={{ backgroundColor: '#05080c' }}
+      className="relative grid min-h-screen min-h-[100svh] overflow-hidden bg-ink md:grid-cols-[5fr_7fr]"
       onMouseEnter={() => setHolding(true)}
       onMouseLeave={() => setHolding(false)}
       onFocusCapture={() => setHolding(true)}
       onBlurCapture={() => setHolding(false)}
     >
-      {/* LAYER 0: Full-bleed background image with left-edge mask fade */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          WebkitMaskImage:
-            'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 15%, rgba(0,0,0,0.7) 30%, black 50%)',
-          maskImage:
-            'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 15%, rgba(0,0,0,0.7) 30%, black 50%)',
-        }}
-      >
-        <img
-          src={heroBg}
-          alt="HUMO-01 Formula Student car with cyan atmospheric effects"
-          loading="eager"
-          fetchPriority="high"
-          className="h-full w-full object-cover object-center"
-        />
-      </div>
+      {/* LAYER 0: Deep ink background */}
+      <div className="absolute inset-0 z-0 bg-ink" />
 
       {/* Blueprint grid */}
       <div
@@ -154,15 +137,14 @@ export default function Hero() {
           />
         ))}
 
-      {/* LEFT COLUMN: Typography — z-10, highest layer for text */}
-      <div className="absolute inset-y-0 left-0 z-10 flex w-full flex-col justify-center md:w-[42%] px-8 py-32 md:pl-16 md:pr-8 lg:pl-24">
-        {/* Safety gradient behind text for guaranteed legibility */}
+      {/* LEFT COLUMN: Typography */}
+      <div className="relative z-10 flex flex-col justify-center px-8 py-32 md:pl-16 md:pr-8 lg:pl-24">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-0"
           style={{
             background:
-              'linear-gradient(to right, #05080c 0%, rgba(5,8,12,0.95) 40%, rgba(5,8,12,0.6) 70%, transparent 100%)',
+              'linear-gradient(to right, #0A0E14 0%, rgba(10,14,20,0.85) 50%, transparent 100%)',
           }}
         />
 
@@ -175,7 +157,7 @@ export default function Hero() {
             {slide.eyebrow}
           </p>
 
-          <h1 className="relative z-10 font-display text-[clamp(2.5rem,6vw,5rem)] font-bold uppercase leading-[0.92] tracking-display text-white">
+          <h1 className="relative z-10 -mr-12 font-display text-[clamp(2.5rem,6vw,5rem)] font-bold uppercase leading-[0.92] tracking-display text-white md:-mr-20 lg:-mr-28">
             {slide.headline.map((line, li) => (
               <span
                 key={li}
@@ -208,6 +190,39 @@ export default function Hero() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* RIGHT COLUMN: Car, z-20, mask fade from left */}
+      <div
+        className="relative z-20 overflow-visible"
+        style={{
+          WebkitMaskImage:
+            'linear-gradient(to right, transparent 0%, black 35%)',
+          maskImage:
+            'linear-gradient(to right, transparent 0%, black 35%)',
+        }}
+      >
+        <div className="absolute inset-0 flex items-end justify-center overflow-visible">
+          <img
+            src={heroBg}
+            alt="HUMO-01 Formula Student car with cyan atmospheric effects"
+            loading="eager"
+            fetchPriority="high"
+            className="block h-[70vh] w-full object-cover object-left-bottom md:h-[85vh] md:object-cover md:object-left-bottom lg:h-[92vh]"
+            style={{
+              transform: 'scale(1.15) translateX(5%)',
+              transformOrigin: 'bottom right',
+            }}
+          />
+        </div>
+
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1/3"
+          style={{
+            background: 'linear-gradient(to top, #0A0E14 0%, transparent 100%)',
+          }}
+        />
       </div>
 
       {/* CONTROLS */}
