@@ -1,14 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useReducedMotion from '../hooks/useReducedMotion';
-import CarSilhouette from './CarSilhouette';
 import { ChevronLeft, ChevronRight } from './icons';
+
+import trackAction768 from '../assets/images/humo-01-track-action-768.jpg';
+import trackAction768Webp from '../assets/images/humo-01-track-action-768.webp';
+import trackAction1280 from '../assets/images/humo-01-track-action-1280.jpg';
+import trackAction1280Webp from '../assets/images/humo-01-track-action-1280.webp';
 
 const SLIDES = [
   {
     id: 'brand',
     placement: 'top',
     accent: 'gold',
-    image: null,
     eyebrow: 'Formula Student · Tashkent',
     headline: 'HUMO RACING.',
     body: 'We are a student team of engineers, drivers and organisers from Tashkent building a Formula Student car — and racing it against the best.',
@@ -20,8 +23,7 @@ const SLIDES = [
   {
     id: 'car',
     placement: 'bottom',
-    accent: 'navy',
-    image: null,
+    accent: 'aether',
     eyebrow: 'The car',
     headline: 'Designed. Built. Raced.',
     body: 'A single-seater born in CAD, laid up in carbon and shaken down on track. Every subsystem owned by a division, every division owned by the design freeze.',
@@ -31,7 +33,6 @@ const SLIDES = [
     id: 'race',
     placement: 'bottom',
     accent: 'gold',
-    image: null,
     eyebrow: 'Race week',
     headline: 'Five events. One car.',
     body: 'Static scrutiny and design review first — then skidpad, autocross and the endurance race that decides who goes home fastest.',
@@ -40,8 +41,7 @@ const SLIDES = [
   {
     id: 'sponsors',
     placement: 'bottom',
-    accent: 'navy',
-    image: null,
+    accent: 'aether',
     eyebrow: 'Sponsorship',
     headline: 'Backed by the best.',
     body: 'Partnerships fund the build, the travel and the parts. Join the roster of brands behind a Tashkent-built race car.',
@@ -51,7 +51,6 @@ const SLIDES = [
     id: 'join',
     placement: 'bottom',
     accent: 'gold',
-    image: null,
     eyebrow: 'Open positions',
     headline: 'Join the team.',
     body: 'Recruiting across all ten divisions — engineering, management and driving. No empty seats, no dead ends.',
@@ -59,16 +58,16 @@ const SLIDES = [
   },
 ];
 
-const ACCENTS = {
-  gold: {
-    glow: 'rgba(212, 160, 23, 0.28)',
-    shadow: '0 0 80px 20px rgba(212, 160, 23, 0.2), 0 0 160px 40px rgba(212, 160, 23, 0.08)',
-  },
-  navy: {
-    glow: 'rgba(27, 90, 208, 0.32)',
-    shadow: '0 0 80px 20px rgba(27, 90, 208, 0.2), 0 0 160px 40px rgba(27, 90, 208, 0.08)',
-  },
-};
+const PARTICLES = [
+  { top: '15%', left: '8%', size: 4, delay: 0, duration: 5.5 },
+  { top: '25%', left: '72%', size: 3, delay: 1.2, duration: 6.2 },
+  { top: '60%', left: '15%', size: 5, delay: 0.8, duration: 5.0 },
+  { top: '40%', left: '85%', size: 3, delay: 2.0, duration: 6.8 },
+  { top: '75%', left: '55%', size: 4, delay: 0.5, duration: 5.8 },
+  { top: '10%', left: '45%', size: 3, delay: 1.8, duration: 6.0 },
+  { top: '80%', left: '30%', size: 4, delay: 2.5, duration: 5.5 },
+  { top: '50%', left: '60%', size: 3, delay: 3.0, duration: 6.5 },
+];
 
 function PlayIcon() {
   return (
@@ -84,33 +83,6 @@ function PauseIcon() {
       <rect x="6" y="5" width="4" height="14" rx="1" />
       <rect x="14" y="5" width="4" height="14" rx="1" />
     </svg>
-  );
-}
-
-function SlideArt({ slide }) {
-  const accent = ACCENTS[slide.accent];
-  return (
-    <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-      {slide.image ? (
-        <img src={slide.image} alt="" className="absolute right-[-10%] top-1/2 h-[65%] w-[70%] -translate-y-1/2 -rotate-3 object-cover" />
-      ) : (
-        <div className="absolute right-[-10%] top-1/2 aspect-[520/180] w-[86%] max-w-[56rem] -translate-y-1/2 -rotate-3 sm:right-[2%] sm:w-[58%]">
-          {/* Radial glow behind the car */}
-          <div
-            className="absolute -inset-[35%]"
-            style={{ background: `radial-gradient(closest-side, ${accent.glow}, transparent 72%)` }}
-          />
-          {/* Car silhouette with drop-shadow glow */}
-          <CarSilhouette
-            strokeWidth={1.5}
-            className="h-full w-full text-white/25"
-            style={{ filter: `drop-shadow(${accent.shadow})` }}
-          />
-          {/* Scan line effect */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.03] to-transparent bg-[length:100%_4px] pointer-events-none" />
-        </div>
-      )}
-    </div>
   );
 }
 
@@ -142,9 +114,57 @@ export default function Hero() {
       onFocusCapture={() => setHolding(true)}
       onBlurCapture={() => setHolding(false)}
     >
+      {/* Background image */}
+      <div className="absolute inset-0 z-0 flex items-center justify-center">
+        <picture>
+          <source
+            type="image/webp"
+            srcSet={`${trackAction768Webp} 768w, ${trackAction1280Webp} 1280w`}
+            sizes="100vw"
+          />
+          <img
+            src={trackAction1280}
+            srcSet={`${trackAction768} 768w, ${trackAction1280} 1280w`}
+            sizes="100vw"
+            alt="Humo Racing's HUMO-01 on a wet test track"
+            loading="eager"
+            fetchPriority="high"
+            className="h-full max-w-[80rem] object-cover"
+          />
+        </picture>
+      </div>
+
+      {/* Blueprint grid overlay */}
+      <div
+        aria-hidden="true"
+        className={`blueprint-grid-fine pointer-events-none absolute inset-0 z-[1] animate-grid-pulse ${
+          reduced ? 'opacity-[0.03]' : ''
+        }`}
+      />
+
+      {/* Glowing particles */}
+      {!reduced &&
+        PARTICLES.map((p, i) => (
+          <span
+            key={i}
+            aria-hidden="true"
+            className="absolute rounded-full bg-aether-light animate-particle-float"
+            style={{
+              top: p.top,
+              left: p.left,
+              width: p.size,
+              height: p.size,
+              animationDelay: `${p.delay}s`,
+              animationDuration: `${p.duration}s`,
+            }}
+          />
+        ))}
+
+      {/* Per-slide content */}
       {SLIDES.map((slide, i) => {
         const active = i === index;
         const top = slide.placement === 'top';
+        const accentIsGold = slide.accent === 'gold';
         return (
           <div
             key={slide.id}
@@ -156,20 +176,55 @@ export default function Hero() {
               active ? 'opacity-100' : 'pointer-events-none opacity-0'
             }`}
           >
-            <SlideArt slide={slide} />
-            <div className={`container-x relative z-10 flex h-full flex-col ${top ? 'justify-start pt-40' : 'justify-end pb-44'}`}>
+            {/* Radial gradient overlay */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 z-[2]"
+              style={{
+                background: top
+                  ? 'radial-gradient(ellipse at 20% 30%, rgba(3,4,10,0.88) 0%, rgba(3,4,10,0.5) 35%, transparent 65%)'
+                  : 'radial-gradient(ellipse at 20% 70%, rgba(3,4,10,0.88) 0%, rgba(3,4,10,0.5) 35%, transparent 65%)',
+              }}
+            />
+
+            {/* Slide copy */}
+            <div
+              className={`container-x relative z-10 flex h-full flex-col ${
+                top ? 'justify-start pt-36 sm:pt-40' : 'justify-end pb-36 sm:pb-44'
+              }`}
+            >
               <div className={`max-w-2xl ${top ? '' : 'pb-6'}`}>
-                <p className={`eyebrow mb-5 ${slide.accent === 'gold' ? 'text-gold' : 'text-navy-light'}`}>{slide.eyebrow}</p>
-                <h1 className="display-3xl text-white">{slide.headline}</h1>
-                <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-60">{slide.body}</p>
+                <p
+                  className={`eyebrow mb-5 ${
+                    accentIsGold ? 'text-gold' : 'text-aether-light'
+                  }`}
+                >
+                  {slide.eyebrow}
+                </p>
+                <h1 className="display-3xl text-white text-glow-aether">
+                  {slide.headline}
+                </h1>
+                <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-60">
+                  {slide.body}
+                </p>
                 <div className="mt-9 flex flex-wrap items-center gap-4">
                   {slide.cta.map((cta) =>
                     cta.variant === 'gold' ? (
-                      <a key={cta.href} href={cta.href} tabIndex={active ? 0 : -1} className="btn-gold">
+                      <a
+                        key={cta.href}
+                        href={cta.href}
+                        tabIndex={active ? 0 : -1}
+                        className="btn-gold"
+                      >
                         {cta.label}
                       </a>
                     ) : (
-                      <a key={cta.href} href={cta.href} tabIndex={active ? 0 : -1} className="btn-outline">
+                      <a
+                        key={cta.href}
+                        href={cta.href}
+                        tabIndex={active ? 0 : -1}
+                        className="btn-outline"
+                      >
                         {cta.label}
                       </a>
                     )
@@ -181,47 +236,68 @@ export default function Hero() {
         );
       })}
 
+      {/* Previous arrow */}
       <button
         type="button"
         onClick={prev}
         aria-label="Previous slide"
-        className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/20 p-2 text-white transition-colors hover:border-gold hover:text-gold sm:left-5 sm:p-3"
+        className="glass-panel absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full border border-aether/30 p-2 text-aether-light transition-colors hover:border-aether hover:text-aether sm:left-5 sm:p-3"
       >
         <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
+
+      {/* Next arrow */}
       <button
         type="button"
         onClick={next}
         aria-label="Next slide"
-        className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/20 p-2 text-white transition-colors hover:border-gold hover:text-gold sm:right-5 sm:p-3"
+        className="glass-panel absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full border border-aether/30 p-2 text-aether-light transition-colors hover:border-aether hover:text-aether sm:right-5 sm:p-3"
       >
         <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
 
+      {/* Play / pause */}
       <div className="absolute bottom-6 left-4 z-20 sm:left-8">
         <button
           type="button"
           onClick={() => setPlaying((v) => !v)}
           aria-label={playing ? 'Pause slideshow' : 'Play slideshow'}
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:border-gold hover:text-gold"
+          className="glass-panel flex h-11 w-11 items-center justify-center rounded-full border border-aether/30 text-aether-light transition-colors hover:border-aether hover:text-aether"
         >
           {playing ? <PauseIcon /> : <PlayIcon />}
         </button>
       </div>
 
-      <div className="absolute bottom-7 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2.5" role="group" aria-label="Choose slide">
-        {SLIDES.map((slide, i) => (
-          <button
-            key={slide.id}
-            type="button"
-            onClick={() => goTo(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            aria-current={index === i}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              index === i ? 'w-8 bg-gold' : 'w-2 bg-white/30 hover:bg-white/60'
-            }`}
-          />
-        ))}
+      {/* Pagination dots — holographic trace */}
+      <div
+        className="absolute bottom-7 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3"
+        role="group"
+        aria-label="Choose slide"
+      >
+        {SLIDES.map((slide, i) => {
+          const active = index === i;
+          return (
+            <button
+              key={slide.id}
+              type="button"
+              onClick={() => goTo(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              aria-current={active}
+              className={`relative h-2 rounded-full transition-all duration-400 ${
+                active
+                  ? 'w-8 bg-aether shadow-aether-glow'
+                  : 'w-2 bg-ink-20 hover:bg-ink-40'
+              }`}
+            >
+              {active && (
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 rounded-full bg-aether-light animate-holographic-trace opacity-60"
+                />
+              )}
+            </button>
+          );
+        })}
       </div>
     </section>
   );

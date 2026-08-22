@@ -9,8 +9,8 @@ const socialIconMap = {
 
 export default function Footer() {
   return (
-    <footer className="bg-ink">
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
+    <footer className="bg-obsidian">
+      <div className="hairline-aether" />
       <div className="container-x">
         <div className="grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
@@ -53,7 +53,7 @@ export default function Footer() {
                       href={social.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-3 text-ink-60 transition-colors hover:text-gold"
+                      className="inline-flex items-center gap-3 text-ink-60 transition-colors hover:text-aether-light"
                     >
                       {Icon && <Icon className="h-5 w-5" />}
                       <span className="font-display text-sm uppercase tracking-display">{social.name}</span>
@@ -77,10 +77,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="hairline" />
+        <div className="hairline-aether" />
         <div className="flex flex-wrap items-center justify-between gap-4 py-8">
           <p className="text-xs text-ink-30">
-            © {new Date().getFullYear()} Humo Racing. All rights reserved.
+            &copy; {new Date().getFullYear()} Humo Racing. All rights reserved.
           </p>
           <p className="font-display text-xs font-bold uppercase tracking-display text-ink-30">
             Built by the team<span className="text-gold">.</span>

@@ -25,15 +25,17 @@ export default function Nav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 bg-ink/95 backdrop-blur-md transition-shadow duration-300 ${
-        scrolled ? 'shadow-[0_10px_30px_rgba(0,0,0,0.45)]' : 'shadow-none'
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-obsidian/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,123,255,0.1)]'
+          : 'bg-transparent'
       }`}
     >
       <nav className="container-x flex h-20 items-center justify-between" aria-label="Primary">
         <a href="#top" className="flex items-center gap-3" onClick={close} aria-label="Humo Racing home">
           <LogoMark className="h-[50px] w-[50px]" />
           <span className="font-display text-xl font-bold uppercase tracking-display text-white">
-            Humo<span className="text-gold"> Racing</span>
+            Humo<span className="text-aether-light"> Racing</span>
           </span>
         </a>
 
@@ -43,7 +45,7 @@ export default function Nav() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="link-underline font-sans text-[0.9rem] font-medium tracking-[0.12em] text-white"
+                  className="link-underline font-sans text-[0.85rem] font-medium tracking-[0.1em] text-ink-70 transition-colors hover:text-aether-light"
                 >
                   {link.label}
                 </a>
@@ -51,7 +53,7 @@ export default function Nav() {
             ))}
           </ul>
 
-          <span className="mx-6 h-5 w-px bg-white/20" aria-hidden="true" />
+          <span className="mx-6 h-5 w-px bg-ink-10" aria-hidden="true" />
 
           <div className="flex items-center gap-3">
             {socials.map((social) => {
@@ -63,9 +65,9 @@ export default function Nav() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={social.name}
-                  className="text-white transition-colors hover:text-gold"
+                  className="text-ink-40 transition-colors hover:text-aether-light"
                 >
-                  <Icon className="h-[22px] w-[22px]" />
+                  <Icon className="h-[20px] w-[20px]" />
                 </a>
               );
             })}
@@ -82,9 +84,9 @@ export default function Nav() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={social.name}
-                className="text-white transition-colors hover:text-gold"
+                className="text-ink-40 transition-colors hover:text-aether-light"
               >
-                <Icon className="h-[22px] w-[22px]" />
+                <Icon className="h-[20px] w-[20px]" />
               </a>
             );
           })}
@@ -96,16 +98,16 @@ export default function Nav() {
             aria-controls="mobile-nav"
             aria-label={open ? 'Close menu' : 'Open menu'}
           >
-            <span className={`h-0.5 w-6 bg-white transition-transform ${open ? 'translate-y-2 rotate-45' : ''}`} />
-            <span className={`h-0.5 w-6 bg-white transition-opacity ${open ? 'opacity-0' : ''}`} />
-            <span className={`h-0.5 w-6 bg-white transition-transform ${open ? '-translate-y-2 -rotate-45' : ''}`} />
+            <span className={`h-0.5 w-6 bg-ink-70 transition-transform ${open ? 'translate-y-2 rotate-45' : ''}`} />
+            <span className={`h-0.5 w-6 bg-ink-70 transition-opacity ${open ? 'opacity-0' : ''}`} />
+            <span className={`h-0.5 w-6 bg-ink-70 transition-transform ${open ? '-translate-y-2 -rotate-45' : ''}`} />
           </button>
         </div>
       </nav>
 
       <div
         id="mobile-nav"
-        className={`lg:hidden overflow-hidden bg-ink/95 backdrop-blur-md transition-[max-height] duration-300 ${
+        className={`lg:hidden overflow-hidden bg-obsidian/95 backdrop-blur-md transition-[max-height] duration-300 ${
           open ? 'max-h-96' : 'max-h-0'
         }`}
       >
@@ -115,7 +117,7 @@ export default function Nav() {
               <a
                 href={link.href}
                 onClick={close}
-                className="block py-3 font-display text-lg uppercase tracking-display text-white transition-colors hover:text-gold"
+                className="block py-3 font-display text-lg uppercase tracking-display text-ink-70 transition-colors hover:text-aether-light"
               >
                 {link.label}
               </a>

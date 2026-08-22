@@ -69,13 +69,13 @@ export default function CardArt({ image, glyph, className, alt = '' }) {
       {image ? (
         <img src={image} alt={alt} className="h-full w-full object-cover" />
       ) : (
-        <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-br from-ink via-ink to-navy">
+        <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-br from-obsidian via-ink to-obsidian">
           <div
             aria-hidden="true"
             className="absolute inset-0"
-            style={{ background: 'radial-gradient(closest-side, rgba(212,160,23,0.18), transparent 70%)' }}
+            style={{ background: 'radial-gradient(closest-side, rgba(0,123,255,0.15), transparent 70%)' }}
           />
-          <span className="text-white/20">
+          <span className="text-aether/20">
             <Glyph />
           </span>
         </div>

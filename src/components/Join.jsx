@@ -29,10 +29,17 @@ export default function Join() {
   const [form, setForm] = useState(INITIAL_FORM);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const [selectedDivision, setSelectedDivision] = useState('');
 
   const update = (field) => (e) => {
     setForm((f) => ({ ...f, [field]: e.target.value }));
     setErrors((er) => ({ ...er, [field]: '' }));
+  };
+
+  const handleDivisionClick = (div) => {
+    setSelectedDivision(div);
+    setForm((f) => ({ ...f, division: div }));
+    setErrors((er) => ({ ...er, division: '' }));
   };
 
   const validate = () => {
@@ -59,25 +66,26 @@ export default function Join() {
 
   if (submitted) {
     return (
-      <section id="join" className="relative bg-navy py-32">
-        <div className="container-x text-center">
+      <section id="join" className="section-obsidian-alt relative overflow-hidden">
+        <div className="container-x text-center py-32">
           <div className="mx-auto max-w-md">
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gold/20">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-8 w-8 text-gold">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-aether/15">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-8 w-8 text-aether">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="display-2xl text-white">Application sent</h2>
-            <p className="mt-6 text-lg leading-relaxed text-white/70">
+            <h2 className="display-2xl text-white">APPLICATION SENT</h2>
+            <p className="mt-6 text-lg leading-relaxed text-ink-60">
               Thank you, <span className="font-semibold text-gold">{form.name}</span>. We will review your application and get back to you soon.
             </p>
             <button
               type="button"
               onClick={() => {
                 setForm(INITIAL_FORM);
+                setSelectedDivision('');
                 setSubmitted(false);
               }}
-              className="mt-8 rounded-full border border-white/25 px-6 py-2.5 font-display text-sm font-bold uppercase tracking-display text-white transition-colors hover:border-gold hover:text-gold"
+              className="btn-outline mt-8"
             >
               Submit another
             </button>
@@ -88,15 +96,15 @@ export default function Join() {
   }
 
   return (
-    <section id="join" className="relative bg-navy py-28">
-      <div className="container-x">
+    <section id="join" className="section-obsidian-alt relative overflow-hidden">
+      <div className="container-x py-24 lg:py-32">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-20">
-          {/* Left column — copy */}
+          {/* Left column — copy + division buttons */}
           <div>
-            <p className="eyebrow mb-6 text-gold">Open positions</p>
-            <h2 className="display-2xl text-white">Join the team</h2>
-            <div className="hairline-gold mt-6 w-16" />
-            <div className="mt-8 max-w-lg space-y-4 text-lg leading-relaxed text-white/70">
+            <span className="eyebrow text-aether">OPEN POSITIONS</span>
+            <h2 className="display-2xl mt-4 text-white">JOIN THE TEAM</h2>
+            <div className="hairline-aether mt-6 w-16" />
+            <div className="mt-8 max-w-lg space-y-4 text-ink-60 leading-relaxed">
               <p>
                 Humo Racing is recruiting across all ten divisions — from
                 aerodynamics and powertrain to drivers and management.
@@ -109,12 +117,18 @@ export default function Join() {
 
             <div className="mt-10 grid grid-cols-2 gap-3">
               {TEAM_DIVISIONS.map((div) => (
-                <div
+                <button
                   key={div}
-                  className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-medium uppercase tracking-wider text-white/50"
+                  type="button"
+                  onClick={() => handleDivisionClick(div)}
+                  className={`rounded-lg border px-3 py-2 text-xs font-medium uppercase tracking-wider transition-all duration-300 ${
+                    selectedDivision === div
+                      ? 'border-aether/30 bg-aether/10 text-aether-light glow-aether'
+                      : 'border-ink-10 bg-ink/[0.04] text-ink-40 hover:border-ink-20 hover:text-ink-30'
+                  }`}
                 >
                   {div}
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -124,12 +138,12 @@ export default function Join() {
             <form
               onSubmit={handleSubmit}
               noValidate
-              className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-8 backdrop-blur-sm"
+              className="glass-panel p-6 sm:p-8"
             >
               <div className="space-y-5">
                 {/* Name */}
                 <div>
-                  <label htmlFor="join-name" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-white/40">
+                  <label htmlFor="join-name" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-ink-30">
                     Full name *
                   </label>
                   <input
@@ -138,8 +152,8 @@ export default function Join() {
                     value={form.name}
                     onChange={update('name')}
                     placeholder="Muhammad Mahmudov"
-                    className={`w-full rounded-lg border bg-white/[0.06] px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-gold/50 ${
-                      errors.name ? 'border-red-400/60' : 'border-white/10'
+                    className={`w-full rounded-lg border bg-ink-05 px-4 py-3 text-sm text-white placeholder:text-ink-20 focus:outline-none focus:ring-2 focus:ring-aether/50 ${
+                      errors.name ? 'border-red-400/60' : 'border-ink-10'
                     }`}
                   />
                   {errors.name && <p className="mt-1 text-xs text-red-300">{errors.name}</p>}
@@ -147,7 +161,7 @@ export default function Join() {
 
                 {/* Email */}
                 <div>
-                  <label htmlFor="join-email" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-white/40">
+                  <label htmlFor="join-email" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-ink-30">
                     Email *
                   </label>
                   <input
@@ -156,8 +170,8 @@ export default function Join() {
                     value={form.email}
                     onChange={update('email')}
                     placeholder="you@university.uz"
-                    className={`w-full rounded-lg border bg-white/[0.06] px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-gold/50 ${
-                      errors.email ? 'border-red-400/60' : 'border-white/10'
+                    className={`w-full rounded-lg border bg-ink-05 px-4 py-3 text-sm text-white placeholder:text-ink-20 focus:outline-none focus:ring-2 focus:ring-aether/50 ${
+                      errors.email ? 'border-red-400/60' : 'border-ink-10'
                     }`}
                   />
                   {errors.email && <p className="mt-1 text-xs text-red-300">{errors.email}</p>}
@@ -165,7 +179,7 @@ export default function Join() {
 
                 {/* Phone */}
                 <div>
-                  <label htmlFor="join-phone" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-white/40">
+                  <label htmlFor="join-phone" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-ink-30">
                     Phone number *
                   </label>
                   <input
@@ -174,8 +188,8 @@ export default function Join() {
                     value={form.phone}
                     onChange={update('phone')}
                     placeholder="+998 90 123 4567"
-                    className={`w-full rounded-lg border bg-white/[0.06] px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-gold/50 ${
-                      errors.phone ? 'border-red-400/60' : 'border-white/10'
+                    className={`w-full rounded-lg border bg-ink-05 px-4 py-3 text-sm text-white placeholder:text-ink-20 focus:outline-none focus:ring-2 focus:ring-aether/50 ${
+                      errors.phone ? 'border-red-400/60' : 'border-ink-10'
                     }`}
                   />
                   {errors.phone && <p className="mt-1 text-xs text-red-300">{errors.phone}</p>}
@@ -183,7 +197,7 @@ export default function Join() {
 
                 {/* Major */}
                 <div>
-                  <label htmlFor="join-major" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-white/40">
+                  <label htmlFor="join-major" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-ink-30">
                     Major / Field of study *
                   </label>
                   <input
@@ -192,8 +206,8 @@ export default function Join() {
                     value={form.major}
                     onChange={update('major')}
                     placeholder="Mechanical Engineering"
-                    className={`w-full rounded-lg border bg-white/[0.06] px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-gold/50 ${
-                      errors.major ? 'border-red-400/60' : 'border-white/10'
+                    className={`w-full rounded-lg border bg-ink-05 px-4 py-3 text-sm text-white placeholder:text-ink-20 focus:outline-none focus:ring-2 focus:ring-aether/50 ${
+                      errors.major ? 'border-red-400/60' : 'border-ink-10'
                     }`}
                   />
                   {errors.major && <p className="mt-1 text-xs text-red-300">{errors.major}</p>}
@@ -201,22 +215,22 @@ export default function Join() {
 
                 {/* Division */}
                 <div>
-                  <label htmlFor="join-division" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-white/40">
+                  <label htmlFor="join-division" className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-ink-30">
                     Desired division *
                   </label>
                   <select
                     id="join-division"
                     value={form.division}
                     onChange={update('division')}
-                    className={`w-full appearance-none rounded-lg border bg-white/[0.06] px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-gold/50 ${
-                      errors.division ? 'border-red-400/60' : 'border-white/10'
-                    } ${!form.division ? 'text-white/25' : ''}`}
+                    className={`w-full appearance-none rounded-lg border bg-ink-05 px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-aether/50 ${
+                      errors.division ? 'border-red-400/60' : 'border-ink-10'
+                    } ${!form.division ? 'text-ink-20' : ''}`}
                   >
                     <option value="" disabled>
                       Select a division
                     </option>
                     {TEAM_DIVISIONS.map((div) => (
-                      <option key={div} value={div} className="bg-navy text-white">
+                      <option key={div} value={div} className="bg-ink text-white">
                         {div}
                       </option>
                     ))}
@@ -227,12 +241,12 @@ export default function Join() {
 
               <button
                 type="submit"
-                className="mt-8 w-full rounded-full bg-gold py-3.5 font-display text-sm font-bold uppercase tracking-display text-ink transition-[filter] hover:brightness-110"
+                className="btn-gold mt-8 w-full"
               >
                 Submit application
               </button>
 
-              <p className="mt-4 text-center text-[0.7rem] text-white/30">
+              <p className="mt-4 text-center text-[0.7rem] text-ink-40">
                 Data is stored locally in your browser for prototype purposes.
               </p>
             </form>

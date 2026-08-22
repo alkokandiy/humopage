@@ -1,72 +1,114 @@
-export default function About() {
-  return (
-    <section id="team" className="angle relative bg-navy py-28">
-      <div className="container-x">
-        <p className="eyebrow mb-12 text-gold">About</p>
+import { useState } from 'react';
+import { DIVISIONS } from '../data';
 
-        <div className="grid gap-16 lg:grid-cols-2 lg:gap-20">
-          <div className="flex flex-col">
-            <h2 className="display-xl text-white">About Formula Student</h2>
-            <div className="hairline-gold mt-5 w-16" />
-            <div className="mt-8 max-w-xl space-y-4 leading-relaxed text-ink-60">
+export default function About() {
+  const [showDivisions, setShowDivisions] = useState(false);
+
+  return (
+    <section id="team" className="section-obsidian relative overflow-hidden">
+      <div className="blueprint-grid absolute inset-0" />
+
+      <div className="container-x relative z-10 py-24 lg:py-32">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          {/* Left: About Formula Student */}
+          <div className="glass-panel p-8 lg:p-12 angle">
+            <span className="eyebrow text-aether">About</span>
+            <h2 className="display-xl mt-4 text-white">ABOUT FORMULA STUDENT</h2>
+            <div className="hairline-gold my-6" />
+            <div className="space-y-4 text-ink-60 leading-relaxed">
               <p>
-                Formula Student is the world's largest student engineering
-                competition. Every year, university teams from dozens of
-                countries design, build and race a single-seat, open-wheel
-                formula-style car.
+                Formula Student is the world's largest design competition for engineering
+                students. Teams from around the globe design, build, and race small-scale
+                formula-style racing cars, judged on design, cost, business case, and
+                dynamic performance.
               </p>
               <p>
-                Cars are judged across three static events — engineering
-                design, cost &amp; manufacturing, and business presentation —
-                and four dynamic events on track, from acceleration to a
-                22-kilometre endurance race.
-              </p>
-              <p>
-                The series began in the United States in the early 1980s and
-                now runs on nearly every continent. It is often described as
-                the toughest test an engineering student can take.
+                Beyond pure speed, the competition evaluates innovation, reliability, and
+                the team's ability to present a viable engineering and business
+                proposition. It is the ultimate proving ground for the next generation of
+                automotive engineers.
               </p>
             </div>
-            <div className="mt-9">
-              <a
-                href="#about-full"
-                className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-2.5 font-display text-sm font-bold uppercase tracking-display text-ink transition-[filter] hover:brightness-110"
-              >
-                Read more
-              </a>
-            </div>
+            <button className="btn-aether mt-8">READ MORE</button>
           </div>
 
-          <div className="flex flex-col">
-            <h2 className="display-xl text-white">About Us</h2>
-            <div className="hairline-gold mt-5 w-16" />
-            <div className="mt-8 max-w-xl space-y-4 leading-relaxed text-ink-60">
+          {/* Right: About Us */}
+          <div className="glass-panel p-8 lg:p-12 angle">
+            <span className="eyebrow text-gold">Team</span>
+            <h2 className="display-xl mt-4 text-white">ABOUT US</h2>
+            <div className="hairline-aether my-6" />
+            <div className="space-y-4 text-ink-60 leading-relaxed">
               <p>
-                Humo Racing is a Formula Student team from Tashkent, Uzbekistan,
-                founded on July 10, 2026, by Muhammad Mahmudov.
+                Humo Racing is Tajikistan's first Formula Student team, forged in Dushanbe
+                with a singular mission: to prove that world-class engineering knows no
+                borders.
               </p>
               <p>
-                We're organized into ten divisions — from aerodynamics and
-                powertrain to drivers and management — with a clear role for
-                everyone on the team.
-              </p>
-              <p>
-                Our mission is simple: design, build and race a new single-seater
-                every season, and give every member the chance to do real
-                engineering under real deadlines.
+                Our team spans mechanical, electrical, and software disciplines, united by
+                an obsession with performance and a refusal to accept "impossible." We are
+                writing the first chapter of motorsport history for our nation.
               </p>
             </div>
-            <div className="mt-9">
-              <a
-                href="#about-full"
-                className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-2.5 font-display text-sm font-bold uppercase tracking-display text-ink transition-[filter] hover:brightness-110"
+            <button
+              className="btn-gold mt-8"
+              onClick={() => setShowDivisions(!showDivisions)}
+            >
+              {showDivisions ? 'CLOSE' : 'READ MORE'}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Divisions Pop-out Overlay */}
+      {showDivisions && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in"
+          onClick={() => setShowDivisions(false)}
+        >
+          <div className="absolute inset-0 bg-obsidian/80 backdrop-blur-sm" />
+          <div
+            className="glass-panel relative z-10 w-full max-w-5xl max-h-[85vh] overflow-y-auto p-8 lg:p-12"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <span className="eyebrow text-aether">Our Divisions</span>
+                <h3 className="display-xl text-white mt-2">TEAM DIVISIONS</h3>
+              </div>
+              <button
+                className="text-ink-40 hover:text-white transition-colors text-2xl leading-none"
+                onClick={() => setShowDivisions(false)}
+                aria-label="Close"
               >
-                Read more
+                &times;
+              </button>
+            </div>
+            <div className="hairline-gold mb-8" />
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {DIVISIONS.map((division, i) => (
+                <div
+                  key={i}
+                  className="glass-panel p-6 hover:border-aether/30 transition-colors"
+                >
+                  <h4 className="text-aether text-lg font-semibold font-display tracking-wide">
+                    {division.name}
+                  </h4>
+                  <p className="text-ink-60 mt-2 text-sm leading-relaxed">
+                    {division.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 text-center">
+              <a href="#team" className="btn-gold">
+                MEET THE TEAM
               </a>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

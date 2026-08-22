@@ -1,122 +1,80 @@
-import CarSilhouette from './CarSilhouette';
-
-const DEFAULT_BODY = [
-  'HUMO-01 is the first Humo Racing car designed from a blank screen — every panel, bracket and bolt decided by the team.',
-  'The powertrain is combustion — the rest of the spec sheet, from monocoque material to aero package, is still being finalized as design work progresses.',
-  'Driver ergonomics are a priority from day one: the goal is a seat, pedal box and wheel position that put the driver in the same headspace as the engineers who built the car.',
-];
+import render640 from '../assets/images/humo-01-render-640.png';
+import render640Webp from '../assets/images/humo-01-render-640.webp';
+import render960 from '../assets/images/humo-01-render-960.png';
+import render960Webp from '../assets/images/humo-01-render-960.webp';
+import render1280 from '../assets/images/humo-01-render-1280.png';
+import render1280Webp from '../assets/images/humo-01-render-1280.webp';
 
 const SPECS = [
-  { label: 'Powertrain', value: 'Combustion' },
-  { label: 'Chassis', value: 'Tubular Steel' },
-  { label: 'Aero', value: '2-Wing Package' },
-  { label: 'Weight', value: '~230 kg' },
+  { label: 'POWERTRAIN', value: 'Combustion' },
+  { label: 'CHASSIS', value: 'Tubular Steel' },
+  { label: 'AERO', value: '2-Wing Package' },
+  { label: 'WEIGHT', value: '~230 kg' },
 ];
 
-function CarShot({ image }) {
-  if (image) {
-    return (
-      <img
-        src={image}
-        alt="Humo Racing car on track"
-        className="h-full w-full object-cover"
-      />
-    );
-  }
+export default function CarSection() {
   return (
-    <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-br from-ink via-ink to-navy-deep">
-      {/* Base radial glow */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0"
-        style={{ background: 'radial-gradient(closest-side, rgba(212,160,23,0.2), transparent 70%)' }}
-      />
-      {/* Car wireframe with glow */}
-      <div className="relative z-10 w-[80%] text-gold/30">
-        <CarSilhouette
-          className="relative z-10 w-full text-gold/40"
-          strokeWidth={1.2}
-        />
-        {/* Glow layer behind car */}
-        <div
-          className="absolute inset-0 blur-xl opacity-40"
-          aria-hidden="true"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(212,160,23,0.4), transparent 65%)' }}
-        />
-      </div>
-      {/* Horizontal speed lines */}
-      <div aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden">
-        {[
-          { top: '18%', width: '14rem', opacity: 0.3 },
-          { top: '32%', width: '20rem', opacity: 0.15 },
-          { top: '48%', width: '16rem', opacity: 0.25 },
-          { top: '64%', width: '12rem', opacity: 0.2 },
-          { top: '80%', width: '18rem', opacity: 0.12 },
-        ].map((line, i) => (
-          <span
-            key={i}
-            className="absolute right-0 block h-[1px] bg-gradient-to-l from-gold/60 to-transparent"
-            style={{ top: line.top, width: line.width, opacity: line.opacity }}
-          />
-        ))}
-      </div>
-      {/* Bottom reflection line */}
-      <div aria-hidden="true" className="absolute bottom-[22%] left-1/2 h-px w-[75%] -translate-x-1/2 bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
-    </div>
-  );
-}
-
-export default function CarSection({
-  title = 'HUMO-01',
-  eyebrow = 'Our car',
-  body = DEFAULT_BODY,
-  specs = SPECS,
-  image = null,
-  readMoreHref = '#car-full',
-}) {
-  return (
-    <section id="car" className="relative bg-white py-28">
-      <div className="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-        <div className="order-1 overflow-hidden rounded-2xl shadow-2xl shadow-ink/20">
-          <div className="aspect-[16/11] w-full">
-            <CarShot image={image} />
-          </div>
-        </div>
-
-        <div className="order-2">
-          <p className="eyebrow mb-6 text-gold-deep">{eyebrow}</p>
-          <h2 className="display-2xl text-navy">{title}</h2>
-          <div className="hairline-gold mt-6 w-16" />
-          <div className="mt-8 max-w-xl space-y-4 leading-relaxed text-navy/80">
-            {body.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
+    <section id="car" className="section-obsidian-alt relative overflow-hidden">
+      <div className="container-x relative z-10 py-24 lg:py-32">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          {/* Left: Car Image */}
+          <div className="relative">
+            <div className="holographic-border rounded-lg overflow-hidden bg-ink/50">
+              <picture>
+                <source
+                  srcSet={`${render640Webp} 640w, ${render960Webp} 960w, ${render1280Webp} 1280w`}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  type="image/webp"
+                />
+                <source
+                  srcSet={`${render640} 640w, ${render960} 960w, ${render1280} 1280w`}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  type="image/png"
+                />
+                <img
+                  src={render960}
+                  alt="HUMO-01 concept render, front three-quarter view, car #44"
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                />
+              </picture>
+            </div>
           </div>
 
-          {/* Specs grid */}
-          <div className="mt-8 grid grid-cols-2 gap-4">
-            {specs.map((spec) => (
-              <div
-                key={spec.label}
-                className="rounded-lg border border-navy/10 bg-navy/[0.03] px-4 py-3"
-              >
-                <p className="text-[0.7rem] font-semibold uppercase tracking-widest text-navy/40">
-                  {spec.label}
-                </p>
-                <p className="mt-1 font-display text-sm font-bold uppercase tracking-wide text-navy">
-                  {spec.value}
-                </p>
-              </div>
-            ))}
-          </div>
+          {/* Right: Specs & Info */}
+          <div>
+            <span className="eyebrow text-gold">The Machine</span>
+            <h2 className="display-2xl mt-4 text-white">HUMO-01</h2>
+            <div className="hairline-gold my-6" />
 
-          <div className="mt-9">
-            <a
-              href={readMoreHref}
-              className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-2.5 font-display text-sm font-bold uppercase tracking-display text-ink transition-[filter] hover:brightness-110"
-            >
-              Read more
-            </a>
+            {/* HUD Telemetry Gauges */}
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              {SPECS.map((spec, i) => (
+                <div key={i} className="hud-gauge p-4 rounded-md bg-ink/40 border border-aether/10">
+                  <span className="hud-text text-aether text-xs tracking-widest uppercase">
+                    {spec.label}
+                  </span>
+                  <p className="text-glow-aether font-display text-2xl font-bold text-white mt-1">
+                    {spec.value}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-4 text-ink-60 leading-relaxed">
+              <p>
+                HUMO-01 is a purpose-built formula car engineered from a clean sheet.
+                Every tube in the chassis, every element of the aero package, and every
+                line of the engine map is designed in-house to extract maximum performance
+                within the regulations.
+              </p>
+              <p>
+                From concept to composite, HUMO-01 represents thousands of hours of CAD,
+                CFD, FEA, and hands-on fabrication. It is where theory meets tarmac.
+              </p>
+            </div>
+
+            <button className="btn-gold mt-8">READ MORE</button>
           </div>
         </div>
       </div>
